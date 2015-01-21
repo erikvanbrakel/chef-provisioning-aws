@@ -32,6 +32,8 @@ class Chef::Provider::AwsSecurityGroup < Chef::Provider::AwsProvider
   end
 
   action :delete do
+    existing_vpc = ec2.vpcs.with_tag('Name', new_resource.vpc_name).first
+    Chef::Log.debug("Existing VPC: #{existing_vpc.inspect}")
     if existing_vpc
       converge_by "Deleting SG #{new_resource.name} in #{new_resource.region_name}" do
         existing_sg.delete
