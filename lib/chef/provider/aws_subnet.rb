@@ -16,7 +16,9 @@ class Chef::Provider::AwsSubnet < Chef::Provider::AwsProvider
         new_resource.subnet_id subnet.id
         new_resource.save
 
-        ec2.client.modify_subnet_attribute({ :subnet_id => subnet.id, :map_public_ip_on_launch => new_resource.map_public_ip_on_launch })
+        if new_resource.map_public_ip_on_launch != nil
+          ec2.client.modify_subnet_attribute({ :subnet_id => subnet.id, :map_public_ip_on_launch => new_resource.map_public_ip_on_launch })
+        end
       end
     end
   end
