@@ -15,6 +15,8 @@ class Chef::Provider::AwsSubnet < Chef::Provider::AwsProvider
         subnet.tags['VPC'] = new_resource.vpc
         new_resource.subnet_id subnet.id
         new_resource.save
+
+        ec2.client.modify_subnet_attribute({ :subnet_id => subnet.id, :map_public_ip_on_launch => opts[:map_public_ip_on_launch]})
       end
     end
   end
