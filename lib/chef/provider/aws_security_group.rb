@@ -74,11 +74,7 @@ class Chef::Provider::AwsSecurityGroup < Chef::Provider::AwsProvider
 
   def existing_sg
     @existing_sg ||= begin
-      if id != nil
-        ec2.security_groups[id]
-      else
-        nil
-      end
+      ec2.security_groups.with_tag('Name', new_resource.name).first
     rescue
       nil
     end

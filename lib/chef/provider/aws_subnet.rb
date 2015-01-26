@@ -42,7 +42,7 @@ class Chef::Provider::AwsSubnet < Chef::Provider::AwsProvider
   end
 
   def existing_subnet
-    @existing_subnet ||= begin
+      @subnet_id ||= begin
       ec2.subnets.with_tag('Name', new_resource.name).first
     rescue
       nil
