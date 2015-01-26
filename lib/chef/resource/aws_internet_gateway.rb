@@ -9,7 +9,7 @@ class Chef::Resource::AwsInternetGateway < Chef::Resource::AwsResource
   default_action :create
 
   attribute :name, :kind_of => String, :name_attribute => true
-  attribute :vpc, :kind_of => String
+  attribute :vpc_name, :kind_of => String
 
   def initialize(*args)
     super

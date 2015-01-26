@@ -8,7 +8,9 @@ class Chef::Provider::AwsInternetGateway < Chef::Provider::AwsProvider
       gateway.tags['Name'] = new_resource.name
     end
 
-    gateway.attach(new_resource.vpc)
+    existing_vpc = ec2.vpcs.with_tag('Name', new_resource.vpc_name).first
+
+    gateway.attach(existing_vpc)
 
     ec2.route_tables.main_route_table.create_route("0.0.0.0/0", { :internet_gateway => gateway.id })
 
