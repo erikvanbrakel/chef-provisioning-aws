@@ -11,7 +11,7 @@ class Chef::Provider::AwsInternetGateway < Chef::Provider::AwsProvider
 
       gateway.attach(existing_vpc)
 
-      ec2.route_tables.main_route_table.create_route("0.0.0.0/0", { :internet_gateway => gateway.id })
+      existing_vpc.route_tables.main_route_table.create_route("0.0.0.0/0", { :internet_gateway => gateway.id })
 
       new_resource.save
     end
