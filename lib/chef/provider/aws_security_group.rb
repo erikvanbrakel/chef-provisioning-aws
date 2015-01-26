@@ -22,6 +22,8 @@ class Chef::Provider::AwsSecurityGroup < Chef::Provider::AwsProvider
         end
 
         sg = ec2.security_groups.create(new_resource.name, opts)
+        sg.tags['Name'] = new_resource.name
+
         new_resource.security_group_id sg.group_id
         new_resource.save
       end
